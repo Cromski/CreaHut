@@ -22,7 +22,7 @@ function App() {
     if (e.key === 'Enter') {
       handleButtonClick();
     } else if (e.key === 'ArrowUp') {
-      setInputValue(history[0])
+      setInputValue(history[0]);
     }
   };
 
@@ -44,11 +44,14 @@ function App() {
         }
       );
       const imageUrl = response.data.data[0].url;
-      console.log("imageUrl:" + imageUrl)
       setImageUrl(imageUrl);
     } catch (error) {
       console.error('Error generating image:', error.response ? error.response.data : error.message);
     }
+  };
+
+  const openImageInNewTab = () => {
+    window.open(imageUrl, '_blank');
   };
 
   return (
@@ -60,7 +63,7 @@ function App() {
       </header>
       <div className="relative flex-grow w-full flex flex-col items-center justify-center px-4">
         {imageUrl && (
-          <div className="mb-4">
+          <div className="mb-4 cursor-pointer" onClick={openImageInNewTab}>
             <img src={imageUrl} alt="Generated" className="rounded-lg shadow-md" />
           </div>
         )}
