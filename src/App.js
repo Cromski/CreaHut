@@ -32,7 +32,7 @@ function App() {
       const response = await axios.post(
         'https://api.openai.com/v1/images/generations',
         {
-          prompt: `${prompt}, coloring book, line drawing, black and white`,
+          prompt: `${prompt}, highly detailed, intricate line drawing, black and white, professional quality, no background, coloring book style, leave spaces open for coloring`,
           n: 1,
           size: '512x512',
         },
