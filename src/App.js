@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import logo from './assets/page_logo.png'; // Import the logo
 
 function App() {
   const [inputValue, setInputValue] = useState('');
@@ -60,22 +61,20 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-400 to-purple-600 animate-gradient-move bg-[length:200%_200%] flex flex-col items-center">
-      <header className="w-full text-center py-8 bg-transparent">
-        <h1 className="text-5xl font-extrabold text-white mb-4">
+      <header className="w-full py-8 bg-transparent flex items-center justify-center">
+        <img src={logo} alt="CreaHut Logo" className="h-16 w-16 mr-4 rounded-md" />
+        <h1 className="text-5xl font-extrabold text-white">
           Welcome to CreaHut
         </h1>
       </header>
       <div className="relative flex-grow w-full flex flex-col items-center justify-center px-4">
-        {loading ? (
-          <div className="mb-4">
-            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
+        {loading && (
+          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-white border-t-transparent mb-4"></div>
+        )}
+        {imageUrl && (
+          <div className="mb-4 cursor-pointer" onClick={openImageInNewTab}>
+            <img src={imageUrl} alt="Generated" className="rounded-lg shadow-md" />
           </div>
-        ) : (
-          imageUrl && (
-            <div className="mb-4 cursor-pointer" onClick={openImageInNewTab}>
-              <img src={imageUrl} alt="Generated" className="rounded-lg shadow-md" />
-            </div>
-          )
         )}
         <div className="relative w-full max-w-md mb-4">
           <input
