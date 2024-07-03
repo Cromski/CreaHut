@@ -5,6 +5,7 @@ function App() {
   const [inputValue, setInputValue] = useState('');
   const [history, setHistory] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -28,6 +29,7 @@ function App() {
 
   const generateImage = async (prompt) => {
     const apiKey = process.env.REACT_APP_OPENAI_API_SECRET_KEY;
+    setLoading(true);
     try {
       const response = await axios.post(
         'https://api.openai.com/v1/images/generations',
@@ -47,6 +49,8 @@ function App() {
       setImageUrl(imageUrl);
     } catch (error) {
       console.error('Error generating image:', error.response ? error.response.data : error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,10 +66,16 @@ function App() {
         </h1>
       </header>
       <div className="relative flex-grow w-full flex flex-col items-center justify-center px-4">
-        {imageUrl && (
-          <div className="mb-4 cursor-pointer" onClick={openImageInNewTab}>
-            <img src={imageUrl} alt="Generated" className="rounded-lg shadow-md" />
+        {loading ? (
+          <div className="mb-4">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
           </div>
+        ) : (
+          imageUrl && (
+            <div className="mb-4 cursor-pointer" onClick={openImageInNewTab}>
+              <img src={imageUrl} alt="Generated" className="rounded-lg shadow-md" />
+            </div>
+          )
         )}
         <div className="relative w-full max-w-md mb-4">
           <input
