@@ -9,14 +9,14 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
 
-  const placeholders = ["Elephant", "Batman", "Sun", "Skateboard"];
+  const placeholders = ["Elephant", "Batman", "Sun", "Skateboard", "Rainbow", "Laptop", "Mountain", "Guitar", "Spaceship", "Pineapple", "Dragon", "Unicorn", "Robot", "Ocean", "Bicycle"];
 
   useEffect(() => {
     const interval = setInterval(() => {
       setPlaceholderIndex((prevIndex) => (prevIndex + 1) % placeholders.length);
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [placeholders.length]);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -45,7 +45,7 @@ function App() {
       const response = await axios.post(
         'https://api.openai.com/v1/images/generations',
         {
-          prompt: `${prompt}, highly detailed, intricate line drawing, black and white, professional quality, no background, coloring book style, leave spaces open for coloring`,
+          prompt: `${prompt}, intricate line drawing, black and white, professional quality, no background, coloring book style, leave spaces open for coloring`,
           n: 1,
           size: '512x512',
         },
@@ -97,14 +97,16 @@ function App() {
         <input
           className="p-4 rounded-lg text-lg w-full border-2 border-transparent focus:outline-none focus:border-white pr-12"
           type="text"
-          placeholder={"Write something .. "+placeholders[placeholderIndex]}
+          placeholder={"Try something like: " + placeholders[placeholderIndex]}
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyPress}
+          disabled={loading}
         />
         <button
           className="absolute right-0 top-0 h-full px-4 bg-white rounded-r-lg text-lg text-blue-600 hover:bg-blue-100 focus:outline-none"
           onClick={handleButtonClick}
+          disabled={loading}
         >
           ➔
         </button>
