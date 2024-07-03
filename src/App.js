@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import logo from './assets/page_logo.png'; // Import the logo
 
@@ -7,6 +7,16 @@ function App() {
   const [history, setHistory] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
+  const placeholders = ["Elephant", "Batman", "Sun", "Skateboard"];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prevIndex) => (prevIndex + 1) % placeholders.length);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -87,7 +97,7 @@ function App() {
         <input
           className="p-4 rounded-lg text-lg w-full border-2 border-transparent focus:outline-none focus:border-white pr-12"
           type="text"
-          placeholder="Enter something..."
+          placeholder={"Write something .. "+placeholders[placeholderIndex]}
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyPress}
